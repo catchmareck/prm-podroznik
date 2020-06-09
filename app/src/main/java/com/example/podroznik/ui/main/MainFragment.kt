@@ -71,20 +71,4 @@ class MainFragment : Fragment() {
             })
         }
     }
-
-    fun run(url: String) {
-        val payload = JSONObject()
-        payload.put("email", "android@kotlin.local")
-        payload.put("password", "test123456")
-        payload.put("repeatPassword", "test123456")
-        val request = Request.Builder()
-            .post(payload.toString().toRequestBody("application/json".toMediaTypeOrNull()))
-            .url(url)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) = println("############# DZIEJE SIE ERROR" + e.message)
-            override fun onResponse(call: Call, response: Response) = println("############# DZIEJE SIE" + response.body?.string())
-        })
-    }
 }
