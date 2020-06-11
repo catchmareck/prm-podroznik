@@ -1,5 +1,6 @@
 package com.example.podroznik.ui.main
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import com.example.podroznik.R
+import com.example.podroznik.RegisterActivity
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -50,10 +52,10 @@ class MainFragment : Fragment() {
         authLoginSubmit.text = "Login"
         authLoginSwitch.text = "Register"
 
-        bindEvents()
+        bindEvents(view)
     }
 
-    private fun bindEvents() {
+    private fun bindEvents(view: View) {
 
         authLoginSubmit.setOnClickListener {
 
@@ -69,6 +71,12 @@ class MainFragment : Fragment() {
                 override fun onFailure(call: Call, e: IOException) = println("############# DZIEJE SIE ERROR" + e.message)
                 override fun onResponse(call: Call, response: Response) = println("############# DZIEJE SIE" + response.body?.string())
             })
+        }
+
+        authLoginSwitch.setOnClickListener {
+
+            val intent = Intent(view.context, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 }
