@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.example.podroznik.AppState
 import com.example.podroznik.ListActivity
 import com.example.podroznik.R
 import com.example.podroznik.RegisterActivity
@@ -72,6 +73,8 @@ class MainFragment : Fragment() {
                 override fun onFailure(call: Call, e: IOException) = println("############# DZIEJE SIE ERROR" + e.message)
                 override fun onResponse(call: Call, response: Response){
                     println("############# DZIEJE SIE" + response.body?.string())
+
+                    AppState.getInstance().authHeader = response.headers["set-cookie"]!!
 
                     if (response.code < 200 || response.code > 299) return
 

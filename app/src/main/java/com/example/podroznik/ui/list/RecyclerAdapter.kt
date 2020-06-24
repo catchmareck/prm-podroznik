@@ -1,5 +1,6 @@
 package com.example.podroznik.ui.list
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.podroznik.R
 import kotlinx.android.synthetic.main.list_view_item.view.*
 
-class RecyclerAdapter(private val places: List<String>): RecyclerView.Adapter<RecyclerAdapter.PlaceHolder>() {
+class RecyclerAdapter(private val places: MutableList<Place>): RecyclerView.Adapter<RecyclerAdapter.PlaceHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.PlaceHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.list_view_item, parent, false)
         return PlaceHolder(inflatedView)
@@ -26,7 +27,7 @@ class RecyclerAdapter(private val places: List<String>): RecyclerView.Adapter<Re
     class PlaceHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener {
 
         private var view: View = v
-        private var place: String? = null
+        private var place: Place? = null
 
         companion object {
             private val placeKey = "PLACE"
@@ -40,9 +41,11 @@ class RecyclerAdapter(private val places: List<String>): RecyclerView.Adapter<Re
             Log.d("Recycler view", "CLICK! ${this.place}")
         }
 
-        fun bindPlace(category: String) {
-            this.place = category
-            view.item_name.text = this.place
+        fun bindPlace(place: Place) {
+            this.place = place
+            view.item_name.text = this.place!!.placeName
+            view.item_diameter.text = this.place!!.placeDiameter.toString()
+            view.item_photo.setImageBitmap(BitmapFactory.decodeByteArray(place.placePhoto, 0, place.placePhoto.size))
         }
     }
 }
