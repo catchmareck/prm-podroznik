@@ -1,5 +1,6 @@
 package com.example.podroznik.ui.list
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.podroznik.R
+import com.example.podroznik.ui.DetailsActivity
 import kotlinx.android.synthetic.main.list_view_item.view.*
 
 class RecyclerAdapter(private val places: MutableList<Place>): RecyclerView.Adapter<RecyclerAdapter.PlaceHolder>() {
@@ -37,8 +39,12 @@ class RecyclerAdapter(private val places: MutableList<Place>): RecyclerView.Adap
             v.setOnClickListener(this)
         }
 
-        override fun onClick(v: View?) {
+        override fun onClick(v: View) {
             Log.d("Recycler view", "CLICK! ${this.place}")
+
+            val intent = Intent(v.context, DetailsActivity::class.java)
+            intent.putExtra("place", this.place)
+            v.context.startActivity(intent)
         }
 
         fun bindPlace(place: Place) {

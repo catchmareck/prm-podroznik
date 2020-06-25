@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Podroznik</string>
     <string name="place_photo_desc">place photo</string>
+
+    <string name="button_edit_place_text">Edytuj</string>
+    <string name="button_delete_place_text">Usuń</string>
+    <string name="button_back_text">Wstecz</string>
 </resources>
