@@ -1,5 +1,6 @@
 package com.example.podroznik.ui.details
 
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.podroznik.R
 import com.example.podroznik.ui.list.Place
 import kotlinx.android.synthetic.main.details_fragment.view.*
@@ -53,12 +56,40 @@ class DetailsFragment : Fragment() {
         view.item_note.text = viewModel.place.placeNote
         view.item_photo.setImageBitmap(BitmapFactory.decodeByteArray(viewModel.place.placePhoto, 0, viewModel.place.placePhoto.size))
 
+        subscribeLiveData()
         bindEvents()
+    }
+
+    private fun subscribeLiveData() {
+        viewModel.deleted.observe(viewLifecycleOwner, Observer { change ->
+
+            if (change == true) {
+                activity?.finish()
+                val toast = Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
     }
 
     private fun bindEvents() {
         buttonBack.setOnClickListener {
             activity?.finish()
+        }
+
+        buttonDelete.setOnClickListener {
+
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle(getString(R.string.place_delete_dialog_title))
+            builder.setMessage(getString(R.string.place_delete_dialog_message, viewModel.place.placeName))
+
+            builder.setPositiveButton("TAK") {_, _ ->
+                viewModel.deletePlace()
+            }
+
+            builder.setNegativeButton("Nie") { dialog, _ -> dialog.cancel() }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 }

@@ -5,4 +5,7 @@
     <string name="button_edit_place_text">Edytuj</string>
     <string name="button_delete_place_text">Usuń</string>
     <string name="button_back_text">Wstecz</string>
+
+    <string name="place_delete_dialog_title">Jesteś pewien?</string>
+    <string name="place_delete_dialog_message">Chcesz usunąć %1$s z listy miejsc?</string>
 </resources>
