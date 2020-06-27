@@ -14,7 +14,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.podroznik.R
-import com.example.podroznik.ui.DetailsActivity
 import com.example.podroznik.ui.EditActivity
 import com.example.podroznik.ui.PlaceAction
 import com.example.podroznik.ui.list.Place

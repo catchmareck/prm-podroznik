@@ -2,11 +2,7 @@ package com.example.podroznik.ui.list
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +15,6 @@ import com.example.podroznik.R
 import com.example.podroznik.ui.EditActivity
 import com.example.podroznik.ui.PlaceAction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ListFragment : Fragment() {

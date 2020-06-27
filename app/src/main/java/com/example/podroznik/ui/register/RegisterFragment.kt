@@ -76,7 +76,7 @@ class RegisterFragment : Fragment() {
                 .build()
 
             client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) = println("############# DZIEJE SIE ERROR" + e.message)
+                override fun onFailure(call: Call, e: IOException) = println("############# REGISTER SIE ERROR" + e.message)
                 override fun onResponse(call: Call, response: Response){
 
                     if (response.code < 200 || response.code > 299) return

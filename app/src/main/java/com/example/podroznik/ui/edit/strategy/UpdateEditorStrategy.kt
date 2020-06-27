@@ -1,14 +1,11 @@
 package com.example.podroznik.ui.edit.strategy
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.View
-import androidx.core.graphics.drawable.toBitmap
 import com.example.podroznik.ui.edit.EditFragment
 import com.example.podroznik.ui.edit.EditViewModel
 import kotlinx.android.synthetic.main.edit_fragment.*
 import kotlinx.android.synthetic.main.edit_fragment.view.*
-import java.io.ByteArrayOutputStream
 
 class UpdateEditorStrategy(view: View, fragment: EditFragment, viewModel: EditViewModel) : EditorStrategy(view, fragment, viewModel) {
 

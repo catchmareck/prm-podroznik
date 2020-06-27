@@ -25,7 +25,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.example.podroznik.AppState
 import com.example.podroznik.R
 import com.example.podroznik.ui.PlaceAction
 import com.example.podroznik.ui.edit.strategy.CreateEditorStrategy
