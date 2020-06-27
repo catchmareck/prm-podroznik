@@ -1,5 +1,6 @@
 package com.example.podroznik.ui.list
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
@@ -11,10 +12,13 @@ import com.example.podroznik.R
 import com.example.podroznik.ui.DetailsActivity
 import kotlinx.android.synthetic.main.list_view_item.view.*
 
-class RecyclerAdapter(private val places: MutableList<Place>): RecyclerView.Adapter<RecyclerAdapter.PlaceHolder>() {
+class RecyclerAdapter(
+    private val fragment: ListFragment,
+    private val places: MutableList<Place>
+): RecyclerView.Adapter<RecyclerAdapter.PlaceHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.PlaceHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.list_view_item, parent, false)
-        return PlaceHolder(inflatedView)
+        return PlaceHolder(fragment, inflatedView)
     }
 
     override fun getItemCount(): Int {
@@ -26,7 +30,7 @@ class RecyclerAdapter(private val places: MutableList<Place>): RecyclerView.Adap
         holder.bindPlace(place)
     }
 
-    class PlaceHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener {
+    class PlaceHolder(private val fragment: ListFragment, v: View): RecyclerView.ViewHolder(v), View.OnClickListener {
 
         private var view: View = v
         private var place: Place? = null
@@ -44,7 +48,7 @@ class RecyclerAdapter(private val places: MutableList<Place>): RecyclerView.Adap
 
             val intent = Intent(v.context, DetailsActivity::class.java)
             intent.putExtra("place", this.place)
-            v.context.startActivity(intent)
+            fragment.startActivityForResult(intent, 10002)
         }
 
         fun bindPlace(place: Place) {

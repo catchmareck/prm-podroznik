@@ -71,17 +71,25 @@ class ListFragment : Fragment() {
         addPlaceBtn.setOnClickListener {
             val intent = Intent(context, EditActivity::class.java)
             intent.putExtra("action", PlaceAction.ADD_PLACE)
-            startActivity(intent)
+            startActivityForResult(intent, 10001)
         }
     }
 
     private fun initializeRecyclerView(view: View) {
 
         linearLayoutManager = LinearLayoutManager(view.context)
-        adapter = RecyclerAdapter(viewModel.getPlaces().value as MutableList<Place>)
+        adapter = RecyclerAdapter(this, viewModel.getPlaces().value as MutableList<Place>)
         recyclerView = view.findViewById(R.id.places_list)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if ((requestCode == 10001 || requestCode == 10002) && resultCode == Activity.RESULT_OK) {
+            viewModel.loadPlaces()
+        }
     }
 }

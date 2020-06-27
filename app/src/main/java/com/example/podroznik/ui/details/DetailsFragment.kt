@@ -1,5 +1,6 @@
 package com.example.podroznik.ui.details
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -66,6 +67,7 @@ class DetailsFragment : Fragment() {
         viewModel.deleted.observe(viewLifecycleOwner, Observer { change ->
 
             if (change == true) {
+                activity?.setResult(Activity.RESULT_OK)
                 activity?.finish()
                 val toast = Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT)
                 toast.show()
@@ -75,6 +77,7 @@ class DetailsFragment : Fragment() {
 
     private fun bindEvents() {
         buttonBack.setOnClickListener {
+            activity?.setResult(Activity.RESULT_OK)
             activity?.finish()
         }
 
@@ -86,6 +89,7 @@ class DetailsFragment : Fragment() {
 
             builder.setPositiveButton("TAK") {_, _ ->
                 viewModel.deletePlace()
+                activity?.setResult(Activity.RESULT_OK)
                 activity?.finish()
             }
 

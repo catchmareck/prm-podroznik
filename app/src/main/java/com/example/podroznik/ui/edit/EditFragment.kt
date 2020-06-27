@@ -114,6 +114,7 @@ class EditFragment : Fragment() {
     private fun subscribeLiveData() {
         viewModel.created.observe(viewLifecycleOwner, Observer { change ->
             if (change == true) {
+                activity?.setResult(Activity.RESULT_OK)
                 activity?.finish()
                 val toast = Toast.makeText(context, "Created", Toast.LENGTH_SHORT)
                 toast.show()
@@ -122,6 +123,7 @@ class EditFragment : Fragment() {
 
         viewModel.edited.observe(viewLifecycleOwner, Observer { change ->
             if (change == true) {
+                activity?.setResult(Activity.RESULT_OK)
                 activity?.finish()
                 val toast = Toast.makeText(context, "Saved", Toast.LENGTH_SHORT)
                 toast.show()
@@ -161,6 +163,7 @@ class EditFragment : Fragment() {
             builder.setMessage(getString(R.string.abandon_edit_dialog_message))
 
             builder.setPositiveButton("TAK") {_, _ ->
+                activity?.setResult(Activity.RESULT_OK)
                 activity?.finish()
             }
 

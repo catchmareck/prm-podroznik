@@ -33,7 +33,6 @@ class ListViewModel : ViewModel() {
             override fun onFailure(call: Call, e: IOException) = println("############# PLACES ERROR" + e.message)
             override fun onResponse(call: Call, response: Response){
                 val res = response.body!!.string()
-                println("############# PLACES $res")
 
                 if (response.code < 200 || response.code > 299) return
 
