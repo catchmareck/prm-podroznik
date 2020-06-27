@@ -27,4 +27,6 @@
     <string name="button_get_loc_text">Pobierz lokalizację</string>
     <string name="button_save_place_text">Zapisz</string>
     <string name="button_abandon_text">Porzuć</string>
+
+    <string name="list_diameter_text">%1$s m</string>
 </resources>

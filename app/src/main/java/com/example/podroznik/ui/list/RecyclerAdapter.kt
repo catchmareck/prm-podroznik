@@ -53,7 +53,7 @@ class RecyclerAdapter(
         fun bindPlace(place: Place) {
             this.place = place
             view.item_name.text = this.place!!.placeName
-            view.item_diameter.text = this.place!!.placeDiameter.toString()
+            view.item_diameter.text = fragment.getString(R.string.list_diameter_text, this.place!!.placeDiameter.toString())
             view.item_photo.setImageBitmap(BitmapFactory.decodeByteArray(place.placePhoto, 0, place.placePhoto.size))
         }
     }
