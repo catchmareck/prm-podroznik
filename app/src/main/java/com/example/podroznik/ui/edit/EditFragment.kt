@@ -152,7 +152,20 @@ class EditFragment : Fragment() {
         }
 
         buttonSavePlace.setOnClickListener {
-            strategy.savePlace()
+
+            if (validateNote()) {
+                strategy.savePlace()
+            } else {
+
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle(getString(R.string.note_too_long_dialog_title))
+                builder.setMessage(getString(R.string.note_too_long_dialog_message))
+
+                builder.setPositiveButton("OK") { dialog, _ -> dialog.cancel() }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            }
         }
 
         buttonAbandon.setOnClickListener {
@@ -187,6 +200,10 @@ class EditFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun validateNote(): Boolean {
+        return placeNote.text.toString().length <= 500
     }
 
     private val locationListener: LocationListener = object : LocationListener {

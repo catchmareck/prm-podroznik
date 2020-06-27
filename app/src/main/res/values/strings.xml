@@ -18,6 +18,9 @@
     <string name="get_loc_failed_dialog_title">Błąd uprawnień</string>
     <string name="get_loc_failed_dialog_message">Nie można odczytać lokalizacji.</string>
 
+    <string name="note_too_long_dialog_title">Zbyt długa notatka</string>
+    <string name="note_too_long_dialog_message">Zbyt długa notatka.</string>
+
     <string name="place_name_input_placeholder">Podaj nazwę</string>
     <string name="place_note_input_placeholder">Notatka (max. 500 znaków)</string>
     <string name="place_diameter_input_placeholder">Promień</string>
