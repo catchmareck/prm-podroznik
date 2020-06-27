@@ -15,8 +15,8 @@ class CreateEditorStrategy(view: View, fragment: EditFragment, viewModel: EditVi
         fragment.place_name.setText("")
         fragment.place_note.setText("")
         fragment.place_diameter.setText("0")
-
-        // TODO set lat & lon
+        fragment.lat = 0.0
+        fragment.lon = 0.0
     }
 
     override fun clearForm() {
@@ -27,14 +27,13 @@ class CreateEditorStrategy(view: View, fragment: EditFragment, viewModel: EditVi
         val name: String = fragment.place_name.text.toString()
         val note: String = fragment.place_note.text.toString()
         val diameter: Double = fragment.place_diameter.text.toString().toDouble()
-        val lon = 0.0 // TODO
-        val lat = 0.0 // TODO
+        val lon = fragment.lat
+        val lat = fragment.lon
 
-        val place = Place(0, name, note, diameter, JSONArray("[]"))
+        val place = Place(0, name, note, diameter, lat, lon, JSONArray("[]"))
         place.placePhoto = getImageBytes()
 
         viewModel.place = place
         viewModel.createPlace()
-        println("save called")
     }
 }

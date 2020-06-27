@@ -11,7 +11,7 @@ import java.io.IOException
 class ListViewModel : ViewModel() {
 
     val data: MutableLiveData<MutableList<Place>> by lazy {
-        MutableLiveData(mutableListOf(Place(0, "", "", 0.0, JSONArray("[]"))))
+        MutableLiveData(mutableListOf(Place(0, "", "", 0.0, 0.0, 0.0, JSONArray("[]"))))
     }
 
     fun getPlaces(): MutableLiveData<MutableList<Place>> {
@@ -46,6 +46,8 @@ class ListViewModel : ViewModel() {
                         json.getString("placeName"),
                         json.getString("placeNote"),
                         json.getDouble("placeDiameter"),
+                        json.getDouble("placeLat"),
+                        json.getDouble("placeLon"),
                         json.getJSONObject("placePhoto").get("data") as JSONArray
                     )
                     result.add(p)

@@ -12,6 +12,12 @@
     <string name="abandon_edit_dialog_title">Jesteś pewien?</string>
     <string name="abandon_edit_dialog_message">Chcesz porzucić zmiany?</string>
 
+    <string name="get_loc_dialog_title">Pobrano lokalizację</string>
+    <string name="get_loc_dialog_message">Lokalizacja została pobrana.</string>
+
+    <string name="get_loc_failed_dialog_title">Błąd uprawnień</string>
+    <string name="get_loc_failed_dialog_message">Nie można odczytać lokalizacji.</string>
+
     <string name="place_name_input_placeholder">Podaj nazwę</string>
     <string name="place_note_input_placeholder">Notatka (max. 500 znaków)</string>
     <string name="place_diameter_input_placeholder">Promień</string>

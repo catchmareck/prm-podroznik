@@ -29,8 +29,8 @@ class EditViewModel : ViewModel() {
         payload.put("name", place.placeName)
         payload.put("note", place.placeNote)
         payload.put("diameter", place.placeDiameter)
-        payload.put("lat", 0.0) // TODO
-        payload.put("lon", 0.0) // TODO
+        payload.put("lat", place.placeLat)
+        payload.put("lon", place.placeLon)
         payload.put("photo", Base64.encodeToString(place.placePhoto, Base64.DEFAULT))
         val request = Request.Builder()
             .post(payload.toString().toRequestBody("application/json".toMediaTypeOrNull()))

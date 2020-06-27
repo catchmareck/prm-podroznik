@@ -1,10 +1,16 @@
 package com.example.podroznik.ui.edit
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Environment
@@ -18,6 +24,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.podroznik.AppState
 import com.example.podroznik.R
 import com.example.podroznik.ui.PlaceAction
@@ -44,6 +51,9 @@ class EditFragment : Fragment() {
     lateinit var buttonSavePlace: Button
     lateinit var buttonAbandon: Button
 
+    var lat: Double = 0.0
+    var lon: Double = 0.0
+
     companion object {
         fun newInstance() = EditFragment()
     }
@@ -53,6 +63,7 @@ class EditFragment : Fragment() {
     private lateinit var mPhotoLocation: String
 
     private lateinit var strategy: EditorStrategy
+    private var locationManager : LocationManager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,6 +100,8 @@ class EditFragment : Fragment() {
         }
         strategy.initForm()
 
+        locationManager = activity?.getSystemService(LOCATION_SERVICE) as LocationManager?
+
         subscribeLiveData()
         bindEvents()
     }
@@ -117,8 +130,26 @@ class EditFragment : Fragment() {
 
     private fun bindEvents() {
 
+        buttonGetLoc.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                    1
+                )
+            } else {
+                locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
+            }
+        }
+
         buttonSavePlace.setOnClickListener {
-            println("SAVE CLICKED")
             strategy.savePlace()
         }
 
@@ -148,9 +179,55 @@ class EditFragment : Fragment() {
                 } catch (e: IOException) { // Error occurred while creating the File
                     Log.e("EditActivity", "Unable to create photo file", e)
                 }
-                // Continue only if the File was successfully created
                 if (photoFile != null) {
                     startActivityForResult(cameraIntent, 101)
+                }
+            }
+        }
+    }
+
+    private val locationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            lat = location.latitude
+            lon = location.longitude
+
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle(getString(R.string.get_loc_dialog_title))
+            builder.setMessage(getString(R.string.get_loc_dialog_message))
+
+            builder.setPositiveButton("OK") { dialog, _ -> dialog.cancel() }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        println(requestCode)
+        println(grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                try {
+                    locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
+                } catch (ex: SecurityException) {
+
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(getString(R.string.get_loc_failed_dialog_title))
+                    builder.setMessage(getString(R.string.get_loc_failed_dialog_message))
+
+                    builder.setPositiveButton("OK") { dialog, _ -> dialog.cancel() }
+
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
                 }
             }
         }
@@ -175,7 +252,6 @@ class EditFragment : Fragment() {
                 val byteArray = stream.toByteArray()
 
                 placePhoto.setImageBitmap(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
-                println(byteArray.toString()) // TODO save byteArray to db
             }
         }
     }

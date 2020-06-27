@@ -8,6 +8,8 @@ class Place(
     var placeName: String,
     var placeNote: String,
     var placeDiameter: Double,
+    var placeLat: Double,
+    var placeLon: Double,
     placePhotoBytes: JSONArray
 ) : Serializable {
 
