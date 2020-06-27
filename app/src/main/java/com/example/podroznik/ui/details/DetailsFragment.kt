@@ -86,6 +86,7 @@ class DetailsFragment : Fragment() {
 
             builder.setPositiveButton("TAK") {_, _ ->
                 viewModel.deletePlace()
+                activity?.finish()
             }
 
             builder.setNegativeButton("Nie") { dialog, _ -> dialog.cancel() }
