@@ -8,4 +8,14 @@
 
     <string name="place_delete_dialog_title">Jesteś pewien?</string>
     <string name="place_delete_dialog_message">Chcesz usunąć %1$s z listy miejsc?</string>
+
+    <string name="abandon_edit_dialog_title">Jesteś pewien?</string>
+    <string name="abandon_edit_dialog_message">Chcesz porzucić zmiany?</string>
+
+    <string name="place_name_input_placeholder">Podaj nazwę</string>
+    <string name="place_note_input_placeholder">Notatka (max. 500 znaków)</string>
+    <string name="place_diameter_input_placeholder">Promień</string>
+    <string name="button_get_loc_text">Pobierz lokalizację</string>
+    <string name="button_save_place_text">Zapisz</string>
+    <string name="button_abandon_text">Porzuć</string>
 </resources>

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.podroznik.R
+import com.example.podroznik.ui.EditActivity
+import com.example.podroznik.ui.PlaceAction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -38,8 +40,6 @@ class ListFragment : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RecyclerAdapter
 
-    private lateinit var mPhotoLocation: String
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,22 +54,8 @@ class ListFragment : Fragment() {
         viewModel.loadPlaces()
 
         addPlaceBtn = view.findViewById(R.id.add_place_btn)
-        addPlaceBtn.setOnClickListener {
 
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (cameraIntent.resolveActivity(activity!!.packageManager) != null) {
-                var photoFile: File? = null
-                try {
-                    photoFile = createImageFile()
-                } catch (e: IOException) { // Error occurred while creating the File
-                    Log.e("ChatActivity", "Unable to create photo file", e)
-                }
-                // Continue only if the File was successfully created
-                if (photoFile != null) {
-                    startActivityForResult(cameraIntent, 101)
-                }
-            }
-        }
+        bindEvents()
 
         viewModel.getPlaces().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
@@ -80,29 +66,15 @@ class ListFragment : Fragment() {
         })
     }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = timeStamp + "filename"
-        val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image: File = File.createTempFile(imageFileName, ".jpg", storageDir)
-        mPhotoLocation = image.absolutePath
-        return image
-    }
+    private fun bindEvents() {
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 101) {
-                val photo = intent?.extras!!.get("data") as Bitmap
-                println(photo)
-                val stream = ByteArrayOutputStream()
-                photo.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                val byteArray = stream.toByteArray()
-
-                println(byteArray.toString()) // TODO save byteArray to db
-            }
+        addPlaceBtn.setOnClickListener {
+            val intent = Intent(context, EditActivity::class.java)
+            intent.putExtra("action", PlaceAction.ADD_PLACE)
+            startActivity(intent)
         }
     }
+
     private fun initializeRecyclerView(view: View) {
 
         linearLayoutManager = LinearLayoutManager(view.context)

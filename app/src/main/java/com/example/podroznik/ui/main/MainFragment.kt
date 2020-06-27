@@ -74,9 +74,9 @@ class MainFragment : Fragment() {
                 override fun onResponse(call: Call, response: Response){
                     println("############# DZIEJE SIE" + response.body?.string())
 
-                    AppState.getInstance().authHeader = response.headers["set-cookie"]!!
-
                     if (response.code < 200 || response.code > 299) return
+
+                    AppState.getInstance().authHeader = response.headers["set-cookie"]!!
 
                     val intent = Intent(view.context, ListActivity::class.java)
                     startActivity(intent)
