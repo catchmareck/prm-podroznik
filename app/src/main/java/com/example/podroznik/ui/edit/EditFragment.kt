@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.podroznik.AppState
 import com.example.podroznik.R
 import com.example.podroznik.ui.PlaceAction
@@ -30,6 +31,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.lifecycle.Observer
 
 class EditFragment : Fragment() {
 
@@ -87,6 +89,7 @@ class EditFragment : Fragment() {
         }
         strategy.initForm()
 
+        subscribeLiveData()
         bindEvents()
     }
 
@@ -94,11 +97,29 @@ class EditFragment : Fragment() {
         strategy = if (action == PlaceAction.ADD_PLACE) CreateEditorStrategy(view, this, viewModel) else UpdateEditorStrategy(view, this, viewModel)
     }
 
+    private fun subscribeLiveData() {
+        viewModel.created.observe(viewLifecycleOwner, Observer { change ->
+            if (change == true) {
+                activity?.finish()
+                val toast = Toast.makeText(context, "Created", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
+
+        viewModel.edited.observe(viewLifecycleOwner, Observer { change ->
+            if (change == true) {
+                activity?.finish()
+                val toast = Toast.makeText(context, "Saved", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
+    }
+
     private fun bindEvents() {
 
         buttonSavePlace.setOnClickListener {
+            println("SAVE CLICKED")
             strategy.savePlace()
-            activity!!.finish()
         }
 
         buttonAbandon.setOnClickListener {

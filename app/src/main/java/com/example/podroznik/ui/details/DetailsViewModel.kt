@@ -25,7 +25,7 @@ class DetailsViewModel : ViewModel() {
 
         val client = OkHttpClient()
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) = println("############# PLACES ERROR" + e.message)
+            override fun onFailure(call: Call, e: IOException) = println("############# DELETE ERROR" + e.message)
             override fun onResponse(call: Call, response: Response){
 
                 if (response.code < 200 || response.code > 299) return

@@ -35,5 +35,6 @@ class CreateEditorStrategy(view: View, fragment: EditFragment, viewModel: EditVi
 
         viewModel.place = place
         viewModel.createPlace()
+        println("save called")
     }
 }

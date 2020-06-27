@@ -21,7 +21,7 @@ abstract class EditorStrategy(val view: View, val fragment: EditFragment, val vi
         return try {
             val bitmap = fragment.place_photo.drawable.toBitmap()
             val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             outputStream.toByteArray()
         } catch (e: Exception) {
             ByteArray(0)
