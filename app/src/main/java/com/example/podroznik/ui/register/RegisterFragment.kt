@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.example.podroznik.AppState
 import com.example.podroznik.ListActivity
 
 import com.example.podroznik.R
@@ -77,9 +78,10 @@ class RegisterFragment : Fragment() {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) = println("############# DZIEJE SIE ERROR" + e.message)
                 override fun onResponse(call: Call, response: Response){
-                    println("############# DZIEJE SIE" + response.body?.string())
 
                     if (response.code < 200 || response.code > 299) return
+
+                    AppState.getInstance().authHeader = response.headers["set-cookie"]!!
 
                     val intent = Intent(view.context, ListActivity::class.java)
                     startActivity(intent)

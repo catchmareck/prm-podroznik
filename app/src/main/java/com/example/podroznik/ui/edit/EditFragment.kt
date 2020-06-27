@@ -39,6 +39,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import java.lang.Exception
 
 class EditFragment : Fragment() {
 
@@ -191,14 +192,16 @@ class EditFragment : Fragment() {
             lat = location.latitude
             lon = location.longitude
 
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle(getString(R.string.get_loc_dialog_title))
-            builder.setMessage(getString(R.string.get_loc_dialog_message))
+            try {
+                val builder = AlertDialog.Builder(context!!)
+                builder.setTitle(getString(R.string.get_loc_dialog_title))
+                builder.setMessage(getString(R.string.get_loc_dialog_message))
 
-            builder.setPositiveButton("OK") { dialog, _ -> dialog.cancel() }
+                builder.setPositiveButton("OK") { dialog, _ -> dialog.cancel() }
 
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            } catch (e: Exception) {}
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
